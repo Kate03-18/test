@@ -58,6 +58,75 @@ int main() {
     return 0;
 }
 
+---
+
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+struct bday
+{
+    int day;
+    int month;
+    int year;
+
+};
+struct student
+{
+    char name[20];
+    float mark[3];
+    float average;
+    struct bday birthday;
+} n[2];
+int main()
+{
+    float sum = 0;
+    for (int i = 0; i &lt; 2; i++)
+    {
+        scanf(&quot;%s&quot;, n[i].name);
+        for (int j = 0; j &lt; 3; j++)
+        {
+            scanf(&quot;%f&quot;, &amp;n[i].mark[j]);
+            sum = sum + n[i].mark[j];
+        }
+        n[i].average = sum / 3;
+        sum = 0;
+        
+scanf(&quot;%d%d%d&quot;, &amp;n[i].birthday.day, &amp;n[i].birthday.month, &amp;n[i].birthday.year);
+    }
+    for (int i = 0; i &lt; 2; i++)
+    {
+        printf(&quot;%s&quot;, n[i].name);
+        for (int j = 0; j &lt; 3; j++)
+        {
+            printf(&quot;%.2f &quot;, n[i].mark[j]);
+        }
+        printf(&quot;%.2f \n&quot;, n[i].average);
+        printf(&quot;%d.%d.%d\n&quot;, n[i].birthday.day, n[i].birthday.month, n[i].birthday.year);
+    }
+}
+
+----
+
+#5
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+struct product
+{
+    char name[10];
+    float cost;
+    int quantity;
+    float amount;
+};
+int main(void)
+{
+    struct product apple;
+    struct product *pointer;
+    pointer = &amp;apple;
+    gets(pointer-&gt;name);
+    scanf(&quot;%f %d&quot;, &amp;pointer-&gt;cost, &amp;pointer-&gt;quantity);
+    pointer-&gt;amount = pointer-&gt;cost * pointer-&gt;quantity;
+    printf(&quot;%s %.2f %d %.2f &quot;, pointer-&gt;name, pointer-&gt;cost, pointer-&gt;quantity, pointer-&gt;amount);
+}
+
 // Array of Pointers
 
 #include <stdio.h>
@@ -146,6 +215,67 @@ int main() {
     }
 
     return 0;
+}
+
+----
+
+#include <stdio.h>
+#include <string.h>
+int check_vowel(char);
+int main()
+{
+char s[100], t[100];
+int c, d = 0;
+printf("Enter a string to delete vowels\n");
+gets(s);
+for (c = 0; s[c] != '\0'; c++) {
+if (check_vowel(s[c]) == 0) { // If not a vowel
+t[d] = s[c];
+d++;
+}
+
+}
+t[d] = '\0';
+strcpy(s, t); // We are changing initial string. This is optional.
+printf("String after deleting vowels: %s\n", s);
+return 0;
+}
+int check_vowel(char t)
+{
+if (t == 'a' || t == 'A' || t == 'e' || t == 'E' || t == 'i' || t == 'I' || t =='o' || t=='O' || t == 'u' || t == 'U')
+return 1;
+return 0;
+}
+
+-----
+
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+char a[100], b[100];
+printf("Enter a string to check if it's a palindrome\n");
+gets(a);
+strcpy(b, a); // Copying input string
+strrev(b); // Reversing the string
+if (strcmp(a, b) == 0) // Comparing input string with the reverse string
+printf("The string is a palindrome.\n");
+else
+printf("The string isn't a palindrome.\n");
+return 0;
+}
+
+----
+
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+char string[1000];
+printf("Input a string to convert to lower case\n");
+gets(string);
+printf("The string in lower case: %s\n", strlwr(string));
+return 0;
 }
 
 
@@ -520,3 +650,61 @@ int main() {
     return 0;
 }
 
+8. უარყოფით რიცხვებს შორის მაქსიმალური მნიშვნელობა
+#include <stdio.h>
+
+int main() {
+  float a[5]={4,-3,6,-1,-8};
+  float max, ind;
+  
+ for (int i=0; i<5; i++)
+  if (a[i]<0 )
+   {
+       max=a[i];
+       ind=i;
+       break;
+   }
+ for (int i=ind+1; i<5; i++)
+   {
+       if (a[i]<0 && a[i]>max)
+       max=a[i];
+   }
+   printf("%.2f", max);
+    return 0;
+}
+
+9.A რაოდენობის უნიპოლარული 
+B რაოდენობის ბიპოლარული 
+და C რაოდენობის მულტიპოლარული (შეიძლება გამოიყენო, როგორც ბიპოლარული და როგორც უნიპოლარული) 
+დაწერეთ პროგრამა, რომელიც დაადგენს თუ რამდენი ციფრული მოწყობილობის აგება შეუძ₾ია გიორგის სამივე ტიპის ტანზისტორის გამოყენებით. 
+
+
+
+#include &lt;stdio.h&gt;
+int main() {
+int A, B, C;
+
+printf(&quot;Enter the number of unipolar transistors (A): &quot;);
+scanf(&quot;%d&quot;, &amp;A);
+printf(&quot;Enter the number of bipolar transistors (B): &quot;);
+scanf(&quot;%d&quot;, &amp;B);
+printf(&quot;Enter the number of multipolar transistors (C): &quot;);
+scanf(&quot;%d&quot;, &amp;C);
+
+int maxDevices = 0;
+while(1){
+if(A != 0) A--;
+else {
+if(C != 0) C--;
+else break;
+};
+if(B != 0) B--;
+else {
+if(C != 0) C--;
+else break;
+};
+maxDevices++;
+}
+printf(&quot;Maximum number of digital devices that can be built: %d\n&quot;, maxDevices);
+return 0;
+}
